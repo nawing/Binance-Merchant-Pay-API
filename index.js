@@ -17,6 +17,7 @@ module.exports = class BinanceMerchantAPI {
     /**
      * hashSignature
      * @param {*} queryString
+     * @returns 
      */
     hashSignature = (queryString) => {
         return crypto
@@ -26,6 +27,7 @@ module.exports = class BinanceMerchantAPI {
     }
     /**
      * randomString
+     * @returns 
      */
     randomString = () => {
         return crypto.randomBytes(32).toString('hex').substring(0, 32);
@@ -70,38 +72,58 @@ module.exports = class BinanceMerchantAPI {
      * @param {string} merchantTradeNo
      * @param {number} orderAmount
      * @param {string} currency
-     * @param {string} description
-     * @param {GoodDeatil[]} goodsDetails
-     * @param {string} goodsType 
-  01: Tangible Goods
-  02: Virtual Goods
-     * @param {string} goodsCategory
-  0000: Electronics & Computers
-  1000: Books, Music & Movies
-  2000: Home, Garden & Tools
-  3000: Clothes, Shoes & Bags
-  4000: Toys, Kids & Baby
-  5000: Automotive & Accessories
-  6000: Game & Recharge
-  7000: Entertainament & Collection
-  8000: Jewelry
-  9000: Domestic service
-  A000: Beauty care
-  B000: Pharmacy
-  C000: Sports & Outdoors
-  D000: Food, Grocery & Health products
-  E000: Pet supplies
-  F000: Industry & Science
-  Z000: Others
-     * @param {string} referenceGoodsId
-     * @param {string} goodsName
-     * @param {string} goodsDetail
-     * @param {string} returnUrl
-     * @param {string} cancelUrl
-     * @param {string} webhookUrl
+
+     * @param {GoodDetail[]} goodsDetails[]
+     * @param {string} GoodDetail.goodsType 
+     * @param {string} GoodDetail.goodsCategory
+     * @param {string} GoodDetail.referenceGoodsId
+     * @param {string} GoodDetail.goodsName
+     * @param {string} GoodDetail.goodsDetail
+     * 
+     * @param {string} returnUrl | optional
+     * @param {string} cancelUrl | optional
+     * @param {string} webhookUrl  | optional
+     * @param {string} fiatAmount | optional
+     * @param {string} fiatCurrency | optional
+     * @param {string} orderExpireTime | optional
+     * @param {string} supportPayCurrency | optional
+     * @param {string} appId | optional
+     * @param {string} universalUrlAttach | optional
+     * @param {string} passThroughInfo | optional
+     * @param {string} description | optional
+     * @param {string} voucherCode | optional
+     * 
+     * @param {Merchant} merchant | optional
+     * @param {string} merchant.subMerchantId | optional
+     * 
+     * @param {Shipping} shipping | optional
+     * @param {string} shipping.shippingPhoneNo
+     * @param {ShippingName} shipping.shippingName.firstName
+     * @param {ShippingName} shipping.shippingName.middleName
+     * @param {ShippingName} shipping.shippingName.lastName
+     * @param {ShippingAddress} shipping.shippingAddress
+     * @param {string} shipping.shippingAddress.region
+     * @param {string} shipping.shippingAddress.state
+     * @param {string} shipping.shippingAddress.city
+     * @param {string} shipping.shippingAddress.address
+     * @param {string} shipping.shippingAddress.zipCode
+     * @param {string} shipping.shippingAddress.shippingAddressType
+     * 
+     * @param {Buyer} buyer | optional
+     * @param {string} buyer.referenceBuyerId 
+     * @param {string} buyer.buyerPhoneCountryCode 
+     * @param {string} buyer.buyerPhoneNo 
+     * @param {string} buyer.buyerEmail 
+     * @param {string} buyer.buyerRegistrationTime 
+     * @param {string} buyer.buyerBrowserLanguage 
+     * @param {BuyerName} buyer.buyerName
+     * @param {string} buyer.buyerName.firstName
+     * @param {string} buyer.buyerName.middleName
+     * @param {string} buyer.buyerName.lastName
+     * 
+     * @returns 
      */
     createOrder = async (opts) => {
-        console.log(opts)
         return await this.httpRequest('POST', '/binancepay/openapi/v3/order',
             {
                 "env": { "terminalType": opts.terminalType },
@@ -110,11 +132,25 @@ module.exports = class BinanceMerchantAPI {
                 'tradeType': opts.tradeType,
                 'orderAmount': opts.orderAmount,
                 'currency': opts.currency,
-                "description": opts.description,
                 "goodsDetails": opts.goodsDetails,
+
                 "returnUrl": opts.returnUrl,
                 "cancelUrl": opts.cancelUrl,
-                "webhookUrl": opts.webhookUrl
+                "webhookUrl": opts.webhookUrl,
+                'fiatAmount': opts.fiatAmount,
+                'fiatCurrency': opts.fiatCurrency,
+                "orderExpireTime": opts.orderExpireTime,
+                "supportPayCurrency": opts.supportPayCurrency,
+                "appId": opts.appId,
+                "universalUrlAttach": opts.universalUrlAttach,
+                "passThroughInfo": opts.passThroughInfo,
+                "description": opts.description,
+                "voucherCode": opts.voucherCode,
+
+                "merchant": opts.merchant,
+                "buyer": opts.buyer,
+                "shipping": opts.shipping,
+
             }
         );
     }
@@ -123,6 +159,7 @@ module.exports = class BinanceMerchantAPI {
      * @param {*} opts
      * @param {string} merchantTradeNo
      * @param {string} prepayId
+     * @returns 
      */
     queryOrder = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/v2/order/query',
@@ -142,6 +179,7 @@ module.exports = class BinanceMerchantAPI {
      * @param {*} opts
      * @param {string} merchantTradeNo
      * @param {string} prepayId
+     * @returns 
      */
     closeOrder = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/order/close',
@@ -161,6 +199,7 @@ module.exports = class BinanceMerchantAPI {
      * @param {*} opts
      * @param {string} merchantTradeNo
      * @param {string} prepayId
+     * @returns 
      */
     createRefund = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/order/refund',
@@ -177,6 +216,7 @@ module.exports = class BinanceMerchantAPI {
      * @param {*} opts
      * @param {string} merchantTradeNo
      * @param {string} prepayId
+     * @returns 
      */
     queryRefund = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/order/refund/query',
@@ -206,6 +246,7 @@ module.exports = class BinanceMerchantAPI {
      * @param {string} transferMethod
      * @param {string} receiver
      * @param {string} remark
+     * @returns 
      */
     createPayOut = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/payout/transfer',
@@ -224,6 +265,7 @@ module.exports = class BinanceMerchantAPI {
      * queryPayOut
      * @param {*} opts
      * @param {string} requestId
+     * @returns 
      */
     queryPayOut = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/payout/query',
@@ -240,6 +282,7 @@ module.exports = class BinanceMerchantAPI {
      * @param {string} registrationEmail
      * @param {string} registrationMobileCode
      * @param {string} openUserId
+     * @returns 
      */
     validatePayOutReceiver = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/payout/receiver/check',
@@ -263,6 +306,7 @@ module.exports = class BinanceMerchantAPI {
      * @param {*} opts
      * @param {string} wallet
      * @param {string} currency
+     * @returns 
      */
     queryWalletBalance = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/balance',
@@ -277,12 +321,117 @@ module.exports = class BinanceMerchantAPI {
      * @param {*} opts
      * @param {string} wallet
      * @param {string} currency
+     * @returns 
      */
     queryV2WalletBalance = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/v2/balance',
             {
                 'wallet': opts.wallet,
                 'currency': opts.currency,
+            }
+        );
+    }
+    /**
+     * addProfitSharingReceiver
+     * @param {*} opts 
+     * @param {string} account
+     * @returns 
+     */
+    addProfitSharingReceiver = async (opts) => {
+        return await this.httpRequest('POST', '/binancepay/openapi/profitsharing/v1/add-receiver',
+            {
+                'account': opts.account,
+            }
+        );
+    }
+    /**
+     * queryProfitSharingReceiver
+     * @param {*} opts 
+     * @param {number} pageNum
+     * @param {number} pageSize
+     * @returns 
+     */
+    queryProfitSharingReceiver = async (opts) => {
+        return await this.httpRequest('POST', '/binancepay/openapi/profitsharing/v1/query-receiver',
+            {
+                'pageNum': opts.pageNum,
+                'pageSize': opts.pageSize,
+            }
+        );
+    }
+    /**
+     * deleteProfitSharingReceiver
+     * @param {*} opts 
+     * @param {string} account
+     * @returns 
+     */
+    deleteProfitSharingReceiver = async (opts) => {
+        return await this.httpRequest('POST', '/binancepay/openapi/profitsharing/v1/del-receiver',
+            {
+                'account': opts.account,
+            }
+        );
+    }
+    /**
+     * createSplit
+     * @param {*} opts 
+     * @param {string} merchantRequestId 
+     * @param {string} prepayOrderId 
+     * @param {ReceiverList[]} receiverList
+     * @param {string} ReceiverList.account
+     * @param {number} ReceiverList.amount
+     * @param {string} ReceiverList.description
+     * @param {string} [ReceiverList.webhookUrl] | optional
+     * @returns 
+     */
+    createSplit = async (opts) => {
+        return await this.httpRequest('POST', '/binancepay/openapi/profitsharing/v1/submit-split',
+            {
+                'merchantRequestId': opts.merchantRequestId,
+                'prepayOrderId': opts.prepayOrderId,
+                'receiverList': opts.receiverList,
+            }
+        );
+    }
+    /**
+     * querySplit
+     * @param {*} opts 
+     * @param {string} merchantRequestId 
+     * @param {string} prepayOrderId 
+     * @returns 
+     */
+    querySplit = async (opts) => {
+        return await this.httpRequest('POST', '/binancepay/openapi/profitsharing/v1/query-split',
+            {
+                'merchantRequestId': opts.merchantRequestId,
+                'prepayOrderId': opts.prepayOrderId,
+            }
+        );
+    }
+    /**
+     * returnSplit
+     * @param {*} opts 
+     * @param {string} prepayOrderId 
+     * @param {string} splitOrderNo | optional
+     * @param {string} originMerchantRequestId | optional
+     * @param {string} merchantReturnNo
+     * @param {string} transferOutAccount
+     * @param {number} returnAmount
+     * @param {string} description | optional
+     * @param {string} webhookUrl | optional
+     * @returns 
+     */
+    returnSplit = async (opts) => {
+        return await this.httpRequest('POST', '/binancepay/openapi/profitsharing/v1/return',
+            {
+                'prepayOrderId': opts.prepayOrderId,
+                'splitOrderNo': opts.splitOrderNo,
+                'originMerchantRequestId': opts.originMerchantRequestId,
+                'merchantReturnNo': opts.merchantReturnNo,
+                'transferOutAccount': opts.transferOutAccount,
+                'returnAmount': opts.returnAmount,
+                'description': opts.description,
+                'webhookUrl': opts.webhookUrl,
             }
         );
     }

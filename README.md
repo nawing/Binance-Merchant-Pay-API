@@ -1,6 +1,9 @@
 # Binance Merchant Pay API 
 
 * I am still working on this to publish npm package. Please feel free to contribute to this. 
+* If you have any questions, always refer back to the API documentation
+* https://developers.binance.com/docs/binance-pay/introduction
+
 
 ### Basic Operations
 
@@ -227,3 +230,9 @@ BinanceMerchantPayAPI
 ```
 
 ### Profit Sharing
+
+
+
+### End
+* If you find this package useful, please buy me a coffee. 
+
