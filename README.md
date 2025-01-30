@@ -28,9 +28,6 @@ const BinancePay = new BinanceMerchantPayAPI(
 // MINI_PROGRAM: The terminal type of the merchant side is a mini program on the mobile phone.
 // OTHERS: other undefined type
 
-
-
-
 BinanceMerchantPayAPI
     .createOrder({
         'terminalType': opts.terminalType,
@@ -80,11 +77,47 @@ BinanceMerchantPayAPI
     })
 ```
 
-#### 5. Refund Order
+### Callback Verifications
+```node
+const express = require("express");
+const bodyParser = require("body-parser");
+const crypto = require("crypto");
+const app = express();
+const PORT = process.env.PORT || 3000;
+app.use(bodyParser.json()); 
+// Binance Merchant API callback endpoint
+app.post("/binance-webhook", (req, res) => {
+    const secretKey = "your_binance_api_secret"; 
+    const payload = JSON.stringify(req.body); 
+    const signature = req.headers["binancepay-signature"]; 
+    const timestamp = req.headers["binancepay-timestamp"];
+    // Generate HMAC SHA-512 signature
+    const hash = crypto.createHmac("sha512", secretKey)
+        .update(timestamp + payload)
+        .digest("hex");
+
+    // Verify signature
+    if (hash !== signature) {
+        return res.status(403).json({ message: "Unauthorized" });
+    }
+    // Process the callback data
+    const { bizType, data, bizStatus } = req.body;
+    if (bizStatus === "PAY_SUCCESS") {
+        // Do your success operations
+    }
+    res.status(200).json({ message: "Success" });
+});
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+```
+
+
+### Refund Operations
+
+#### 1. Create Refund
 ```node
 // https://developers.binance.com/docs/binance-pay/api-order-refund
 BinanceMerchantPayAPI
-    .refundOrder({
+    .createRefund({
         'refundRequestId': opts.refundRequestId,
         'prepayId': opts.prepayId,
         'refundAmount': opts.refundAmount,
@@ -96,8 +129,21 @@ BinanceMerchantPayAPI
         console.log(error)
     })
 ```
-
-
+#### 2. Query Refund
+```node
+// https://developers.binance.com/docs/binance-pay/api-order-refund
+BinanceMerchantPayAPI
+    .queryRefund({
+        'refundRequestId': opts.refundRequestId,
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
+```
 
 
 ### Payout Operations
+### Wallet Balance 
+### Profit Sharing

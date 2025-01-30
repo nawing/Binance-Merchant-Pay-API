@@ -151,13 +151,18 @@ module.exports = class BinanceMerchantAPI {
             }
         );
     }
+    // REFUND
+    // REFUND
+    // REFUND
+    // REFUND
+    // REFUND
     /**
-     * refundOrder
+     * createRefund
      * @param {*} opts
      * @param {string} merchantTradeNo
      * @param {string} prepayId
      */
-    refundOrder = async (opts) => {
+    createRefund = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/order/refund',
             {
                 'refundRequestId': opts.refundRequestId,
@@ -167,13 +172,26 @@ module.exports = class BinanceMerchantAPI {
             }
         );
     }
+    /**
+     * queryRefund
+     * @param {*} opts
+     * @param {string} merchantTradeNo
+     * @param {string} prepayId
+     */
+    queryRefund = async (opts) => {
+        return await this.httpRequest('POST', '/binancepay/openapi/order/refund/query',
+            {
+                'refundRequestId': opts.refundRequestId,
+            }
+        );
+    }
     // PAYOUT
     // PAYOUT
     // PAYOUT
     // PAYOUT
     // PAYOUT
     /**
-     * payoutCreate
+     * reatePayOut
      * @param {*} opts
      * @param {string} requestId
      * @param {string} batchName
@@ -189,7 +207,7 @@ module.exports = class BinanceMerchantAPI {
      * @param {string} receiver
      * @param {string} remark
      */
-    payoutCreate = async (opts) => {
+    reatePayOut = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/payout/transfer',
             {
                 'requestId': opts.requestId,
@@ -203,11 +221,11 @@ module.exports = class BinanceMerchantAPI {
         );
     }
     /**
-     * payoutQuery
+     * queryPayOut
      * @param {*} opts
      * @param {string} requestId
      */
-    payoutQuery = async (opts) => {
+    queryPayOut = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/payout/query',
             {
                 'requestId': opts.requestId,
