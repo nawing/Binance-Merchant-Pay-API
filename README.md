@@ -131,7 +131,7 @@ BinanceMerchantPayAPI
 ```
 #### 2. Query Refund
 ```node
-// https://developers.binance.com/docs/binance-pay/api-order-refund
+// https://developers.binance.com/docs/binance-pay/api-order-refund-query
 BinanceMerchantPayAPI
     .queryRefund({
         'refundRequestId': opts.refundRequestId,
@@ -145,5 +145,85 @@ BinanceMerchantPayAPI
 
 
 ### Payout Operations
+
+#### 1. Create Payout
+```node
+BinanceMerchantPayAPI
+    .createPayOut({
+        'requestId': opts.requestId,
+        'batchName': opts.batchName,
+        'currency': opts.currency,
+        'totalAmount': opts.totalAmount,
+        'totalNumber': opts.totalNumber,
+        'bizScene': opts.bizScene,
+        'transferDetailList': opts.transferDetailList
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
+```
+
+#### 2. Query Payout
+```node
+BinanceMerchantPayAPI
+    .queryPayOut({
+        'requestId': opts.requestId,
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
+```
+
+#### 3. Validate Payout User
+```node
+BinanceMerchantPayAPI
+    .validatePayOutReceiver({
+        'receiveType': opts.receiveType,
+        'receiverId': opts.receiverId,
+        'registrationEmail': opts.registrationEmail,
+        'registrationMobileNumber': opts.registrationMobileNumber,
+        'registrationMobileCode': opts.registrationMobileCode,
+        'openUserId': opts.openUserId,
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
+```
+
 ### Wallet Balance 
+
+#### 1. Query Balance V1
+```node
+BinanceMerchantPayAPI
+    .queryWalletBalance({
+        'wallet': opts.wallet,
+        'currency': opts.currency,
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
+```
+
+#### 2. Query Balance V2
+```node
+BinanceMerchantPayAPI
+    .queryV2WalletBalance({
+        'wallet': opts.wallet,
+        'currency': opts.currency,
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
+```
+
 ### Profit Sharing

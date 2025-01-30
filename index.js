@@ -191,7 +191,7 @@ module.exports = class BinanceMerchantAPI {
     // PAYOUT
     // PAYOUT
     /**
-     * reatePayOut
+     * createPayOut
      * @param {*} opts
      * @param {string} requestId
      * @param {string} batchName
@@ -207,7 +207,7 @@ module.exports = class BinanceMerchantAPI {
      * @param {string} receiver
      * @param {string} remark
      */
-    reatePayOut = async (opts) => {
+    createPayOut = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/payout/transfer',
             {
                 'requestId': opts.requestId,
@@ -229,6 +229,60 @@ module.exports = class BinanceMerchantAPI {
         return await this.httpRequest('POST', '/binancepay/openapi/payout/query',
             {
                 'requestId': opts.requestId,
+            }
+        );
+    }
+    /**
+     * validatePayOutReceiver
+     * @param {*} opts
+     * @param {string} receiveType
+     * @param {string} receiverId
+     * @param {string} registrationEmail
+     * @param {string} registrationMobileCode
+     * @param {string} openUserId
+     */
+    validatePayOutReceiver = async (opts) => {
+        return await this.httpRequest('POST', '/binancepay/openapi/payout/receiver/check',
+            {
+                'receiveType': opts.receiveType,
+                'receiverId': opts.receiverId,
+                'registrationEmail': opts.registrationEmail,
+                'registrationMobileNumber': opts.registrationMobileNumber,
+                'registrationMobileCode': opts.registrationMobileCode,
+                'openUserId': opts.openUserId,
+            }
+        );
+    }
+    //BALANCE
+    //BALANCE
+    //BALANCE
+    //BALANCE
+    //BALANCE
+    /**
+     * queryWalletBalance
+     * @param {*} opts
+     * @param {string} wallet
+     * @param {string} currency
+     */
+    queryWalletBalance = async (opts) => {
+        return await this.httpRequest('POST', '/binancepay/openapi/balance',
+            {
+                'wallet': opts.wallet,
+                'currency': opts.currency,
+            }
+        );
+    }
+    /**
+     * queryV2WalletBalance
+     * @param {*} opts
+     * @param {string} wallet
+     * @param {string} currency
+     */
+    queryV2WalletBalance = async (opts) => {
+        return await this.httpRequest('POST', '/binancepay/openapi/v2/balance',
+            {
+                'wallet': opts.wallet,
+                'currency': opts.currency,
             }
         );
     }
