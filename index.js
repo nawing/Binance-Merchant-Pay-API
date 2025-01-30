@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const axios = require('axios');
 const baseURL = 'https://bpay.binanceapi.com';
 
-module.exports = class BinanceMerchantAPI {
+module.exports = class BinanceMerchantPayAPI {
     constructor(
         apiKey,
         apiSecret,
