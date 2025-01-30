@@ -129,7 +129,7 @@ module.exports = class BinanceMerchantAPI {
                 "env": { "terminalType": opts.terminalType },
                 'merchantId': this.merchantId,
                 'merchantTradeNo': opts.merchantTradeNo,
-                'tradeType': opts.tradeType,
+                // 'tradeType': opts.tradeType,
                 'orderAmount': opts.orderAmount,
                 'currency': opts.currency,
                 "goodsDetails": opts.goodsDetails,
