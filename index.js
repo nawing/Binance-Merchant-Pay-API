@@ -66,6 +66,7 @@ module.exports = class BinanceMerchantAPI {
     /**
      * createOrder
      * @param {*} opts
+     * @param {string} terminalType
      * @param {string} merchantTradeNo
      * @param {number} orderAmount
      * @param {string} currency
@@ -103,10 +104,10 @@ module.exports = class BinanceMerchantAPI {
         console.log(opts)
         return await this.httpRequest('POST', '/binancepay/openapi/v3/order',
             {
-                "env": { "terminalType": "APP" },
+                "env": { "terminalType": opts.terminalType },
                 'merchantId': this.merchantId,
                 'merchantTradeNo': opts.merchantTradeNo,
-                'tradeType': 'WEB',
+                'tradeType': opts.tradeType,
                 'orderAmount': opts.orderAmount,
                 'currency': opts.currency,
                 "description": opts.description,
@@ -151,12 +152,12 @@ module.exports = class BinanceMerchantAPI {
         );
     }
     /**
-     * orderRefund
+     * refundOrder
      * @param {*} opts
      * @param {string} merchantTradeNo
      * @param {string} prepayId
      */
-    orderRefund = async (opts) => {
+    refundOrder = async (opts) => {
         return await this.httpRequest('POST', '/binancepay/openapi/order/refund',
             {
                 'refundRequestId': opts.refundRequestId,
