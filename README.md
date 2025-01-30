@@ -4,6 +4,10 @@
 * If you have any questions, always refer back to the API documentation
 * https://developers.binance.com/docs/binance-pay/introduction
 
+### Installation
+```shell
+npm install binance-merchant-pay-api
+```
 
 ### Basic Operations
 
