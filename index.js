@@ -208,6 +208,7 @@ module.exports = class BinanceMerchantAPI {
                 'prepayId': opts.prepayId,
                 'refundAmount': opts.refundAmount,
                 'refundReason': opts.refundReason,
+                'webhookUrl': opts.webhookUrl,
             }
         );
     }

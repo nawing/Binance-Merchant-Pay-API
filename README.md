@@ -73,6 +73,8 @@ BinanceMerchantPayAPI
 | merchantTradeNo   | string    | true          |
 | prepayId          | string    | true          |
 
+
+
 #### 4. Close Order
 ```node
 // https://developers.binance.com/docs/binance-pay/api-order-close
@@ -87,6 +89,12 @@ BinanceMerchantPayAPI
         console.log(error)
     })
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| merchantTradeNo   | string    | true          |       |
+| prepayId          | string    | true          |       |
+
+
 
 ### Fund Transfer Operations
 #### 1. Transfer Fund
@@ -94,8 +102,10 @@ BinanceMerchantPayAPI
 // https://developers.binance.com/docs/binance-pay/api-wallet-transfer
 BinanceMerchantPayAPI
     .createTransfer({
-        'merchantTradeNo': opts.merchantTradeNo,
-        'prepayId': opts.prepayId,  
+        'requestId': opts.requestId,
+        'currency': opts.currency,  
+        'amount': opts.amount,  
+        'transferType': opts.transferType,  
     })
     .then((response) => {
         console.log(response)
@@ -103,6 +113,14 @@ BinanceMerchantPayAPI
         console.log(error)
     })
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| requestId         | string    | true          |       |    
+| currency          | string    | true          |       |
+| amount            | string    | true          |       |
+| transferType      | string    | true          | 'TO_MAIN','TO_PAY' |
+
+
 
 #### 2. Query Fund
 ```node
@@ -117,6 +135,10 @@ BinanceMerchantPayAPI
         console.log(error)
     })
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| tranId            | string    | true          |       |
+
 
 
 ### Refund Operations
@@ -130,6 +152,7 @@ BinanceMerchantPayAPI
         'prepayId': opts.prepayId,
         'refundAmount': opts.refundAmount,
         'refundReason': opts.refundReason,
+        'webhookUrl': opts.webhookUrl,
     })
     .then((response) => {
         console.log(response)
@@ -137,6 +160,16 @@ BinanceMerchantPayAPI
         console.log(error)
     })
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| refundRequestId   | string    | true          |       |    
+| prepayId          | string    | true          |       |
+| refundAmount      | string    | true          |       |
+| refundReason      | string    | false         |       |
+| webhookUrl        | string    | false         |       |
+
+
+
 #### 2. Query Refund
 ```node
 // https://developers.binance.com/docs/binance-pay/api-order-refund-query
@@ -150,6 +183,10 @@ BinanceMerchantPayAPI
         console.log(error)
     })
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| refundRequestId   | string    | true          |       |
+
 
 
 ### Payout Operations
@@ -168,6 +205,31 @@ BinanceMerchantPayAPI
         'transferDetailList': opts.transferDetailList
     });
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| requestId         | string    | true          |       |
+| batchName         | string    | true          |       |
+| currency          | string    | true          |       |
+| totalAmount       | number    | true          |       |
+| totalNumber       | number    | true          |       |
+| bizScene          | string    | false         |       |
+| transferDetailList   | Array    | true          |       |
+###### Transfer Detail
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| merchantSendId    | string    | true         |       |
+| receiveType       | string    | true         |       |
+| receiver          | string    | true         |       |
+| transferAmount    | number    | true         |       |
+| transferMethod    | string    | true         | 'FUNDING_WALLET', 'SPOT_WALLET' |
+| remark                    | string    | false         |       |
+| registrationEmail         | string    | false         |       |
+| registrationMobileNumber  | string    | false         |       |
+| registrationMobileCode    | string    | false         |       |
+
+ 
+
+
 
 #### 2. Query Payout
 ```node
@@ -177,6 +239,10 @@ BinanceMerchantPayAPI
         'requestId': opts.requestId,
     });
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| requestId         | string    | true          |       |
+
 
 #### 3. Validate Payout User
 ```node
@@ -203,6 +269,13 @@ BinanceMerchantPayAPI
         'currency': opts.currency,
     });
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| wallet            | string    | true          |       |
+| currency          | string    | true          |       |
+
+
+
 
 #### 2. Query Balance V2
 ```node
@@ -213,6 +286,13 @@ BinanceMerchantPayAPI
         'currency': opts.currency,
     });
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| wallet            | string    | true          |       |
+| currency          | string    | false         |       |
+
+
+
 
 ### Profit Sharing
 
@@ -224,6 +304,11 @@ BinanceMerchantPayAPI
         'account': opts.account,
     });
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| account           | string    | true          |       |
+
+
 
 #### 2. Add Profit Sharing Receiver 
 ```node
@@ -234,6 +319,13 @@ BinanceMerchantPayAPI
         'pageSize': opts.pageSize,
     });
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| pageNum           | number    | true          |       |
+| pageSize          | number    | true          |       |
+
+
+
 
 #### 3. Delete Profit Sharing Receiver 
 ```node
@@ -243,6 +335,12 @@ BinanceMerchantPayAPI
         'account': opts.account,
     });
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| account           | string    | true          |       |
+
+
+
 
 #### 4. Create A Profit Split 
 ```node
@@ -254,6 +352,14 @@ BinanceMerchantPayAPI
         'receiverList': opts.receiverList,
     });
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| merchantRequestId | string    | true          |       |
+| prepayOrderId     | string    | true          |       |
+| receiverList      | Array     | true          |       |
+
+
+
 
 #### 5. Query A Profit Split 
 ```node
@@ -264,6 +370,11 @@ BinanceMerchantPayAPI
         'prepayOrderId': opts.prepayOrderId,
     });
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| merchantRequestId | string    | true          |       |
+| prepayOrderId     | string    | true          |       |
+
 
 #### 6. Query A Profit Split 
 ```node
@@ -280,6 +391,10 @@ BinanceMerchantPayAPI
         'webhookUrl': opts.webhookUrl,
     });
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| prepayOrderId     | string    | true          |       |
+| splitOrderNo      | string    | false         |       |
 
 
 ### Callback Handling
