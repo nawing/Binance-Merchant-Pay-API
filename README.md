@@ -105,23 +105,7 @@ BinanceMerchantPayAPI
 | Param                     | Type      | Required      | Description |
 | :---:                     | :---:     | :---:         | :---: |
 | goodsType                 | string    | true          | '01', '02'  |
-| goodsCategory             | string    | true          | 0000: Electronics & Computers
-1000: Books, Music & Movies
-2000: Home, Garden & Tools
-3000: Clothes, Shoes & Bags
-4000: Toys, Kids & Baby
-5000: Automotive & Accessories
-6000: Game & Recharge
-7000: Entertainament & Collection
-8000: Jewelry
-9000: Domestic service
-A000: Beauty care
-B000: Pharmacy
-C000: Sports & Outdoors
-D000: Food, Grocery & Health products
-E000: Pet supplies
-F000: Industry & Science
-Z000: Others |
+| goodsCategory             | string    | true          | 0000: Electronics & Computers, 1000: Books, Music & Movies, 2000: Home, Garden & Tools, 3000: Clothes, Shoes & Bags, 4000: Toys, Kids & Baby, 5000: Automotive & Accessories, 6000: Game & Recharge, 7000: Entertainament & Collection, 8000: Jewelry, 9000: Domestic service, A000: Beauty care, B000: Pharmacy, C000: Sports & Outdoors, D000: Food, Grocery & Health products, E000: Pet supplies, F000: Industry & Science, Z000: Others |
 | referenceGoodsId          | string    | true          |  |
 | goodsName                 | string    | true          |  |
 | goodsDetail               | string    | true          |  |
