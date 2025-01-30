@@ -320,4 +320,4 @@ app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 * If there are any issue, please feel free to contribute and contact me nawingngan@gmail.com
 * If you find this package useful, please buy me a coffee. 
 
-![alt text](https://i.imgur.com/xx04ANu.png)
+<img src="https://i.imgur.com/xx04ANu.png" width="180">
