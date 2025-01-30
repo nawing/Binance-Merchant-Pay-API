@@ -199,12 +199,7 @@ BinanceMerchantPayAPI
         'totalNumber': opts.totalNumber,
         'bizScene': opts.bizScene,
         'transferDetailList': opts.transferDetailList
-    })
-    .then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    })
+    });
 ```
 
 #### 2. Query Payout
@@ -213,12 +208,7 @@ BinanceMerchantPayAPI
 BinanceMerchantPayAPI
     .queryPayOut({
         'requestId': opts.requestId,
-    })
-    .then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    })
+    });
 ```
 
 #### 3. Validate Payout User
@@ -232,12 +222,7 @@ BinanceMerchantPayAPI
         'registrationMobileNumber': opts.registrationMobileNumber,
         'registrationMobileCode': opts.registrationMobileCode,
         'openUserId': opts.openUserId,
-    })
-    .then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    })
+    });
 ```
 
 ### Wallet Balance 
@@ -249,12 +234,7 @@ BinanceMerchantPayAPI
     .queryWalletBalance({
         'wallet': opts.wallet,
         'currency': opts.currency,
-    })
-    .then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    })
+    });
 ```
 
 #### 2. Query Balance V2
@@ -264,12 +244,7 @@ BinanceMerchantPayAPI
     .queryV2WalletBalance({
         'wallet': opts.wallet,
         'currency': opts.currency,
-    })
-    .then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    })
+    });
 ```
 
 ### Profit Sharing
@@ -280,12 +255,7 @@ BinanceMerchantPayAPI
 BinanceMerchantPayAPI
     .addProfitSharingReceiver({
         'account': opts.account,
-    })
-    .then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    })
+    });
 ```
 
 #### 2. Add Profit Sharing Receiver 
@@ -295,12 +265,7 @@ BinanceMerchantPayAPI
     .queryProfitSharingReceiver({
         'pageNum': opts.pageNum,
         'pageSize': opts.pageSize,
-    })
-    .then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    })
+    });
 ```
 
 #### 3. Delete Profit Sharing Receiver 
@@ -309,12 +274,7 @@ BinanceMerchantPayAPI
 BinanceMerchantPayAPI
     .deleteProfitSharingReceiver({
         'account': opts.account,
-    })
-    .then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    })
+    });
 ```
 
 #### 4. Create A Profit Split 
@@ -325,12 +285,7 @@ BinanceMerchantPayAPI
         'merchantRequestId': opts.merchantRequestId,
         'prepayOrderId': opts.prepayOrderId,
         'receiverList': opts.receiverList,
-    })
-    .then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    })
+    });
 ```
 
 #### 5. Query A Profit Split 
@@ -340,12 +295,7 @@ BinanceMerchantPayAPI
     .querySplit({
         'merchantRequestId': opts.merchantRequestId,
         'prepayOrderId': opts.prepayOrderId,
-    })
-    .then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    })
+    });
 ```
 
 #### 6. Query A Profit Split 
@@ -361,12 +311,7 @@ BinanceMerchantPayAPI
         'returnAmount': opts.returnAmount,
         'description': opts.description,
         'webhookUrl': opts.webhookUrl,
-    })
-    .then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    })
+    });
 ```
 
 
@@ -374,5 +319,4 @@ BinanceMerchantPayAPI
 ### End
 * If you find this package useful, please buy me a coffee. 
 
-
-![image description](https://i.imgur.com/xx04ANu.png)
+![alt text](https://i.imgur.com/xx04ANu.png)
