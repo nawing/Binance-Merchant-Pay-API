@@ -80,47 +80,6 @@ BinanceMerchantPayAPI
     })
 ```
 
-### Callback Verifications
-```node
-const express = require("express");
-const bodyParser = require("body-parser");
-const crypto = require("crypto");
-const app = express();
-const PORT = process.env.PORT || 3000;
-app.use(bodyParser.json()); 
-// Binance Merchant API callback endpoint
-app.post("/binance-webhook", (req, res) => {
-    const secretKey = "your_binance_api_secret"; 
-    const payload = JSON.stringify(req.body); 
-    const signature = req.headers["binancepay-signature"]; 
-    const timestamp = req.headers["binancepay-timestamp"];
-    // Generate HMAC SHA-512 signature
-    const hash = crypto.createHmac("sha512", secretKey)
-        .update(timestamp + payload)
-        .digest("hex");
-
-    // Verify signature
-    if (hash !== signature) {
-        return res.status(403).json({ message: "Unauthorized" });
-    }
-    // Process the callback data
-    const { bizType, data, bizStatus } = req.body;
-    if (bizType === "PAY") { 
-        if (bizStatus === "PAY_SUCCESS") {
-            // Do your success operations
-        }
-    }
-    if (bizType === "PAYOUT") {  
-
-    }
-    if (bizType === "PAY_REFUND") {  
-
-    }
-    res.status(200).json({ message: "Success" });
-});
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
-```
-
 ### Fund Transfer Operations
 #### 1. Transfer Fund
 ```node
@@ -315,8 +274,50 @@ BinanceMerchantPayAPI
 ```
 
 
+### Callback Handling
+```node
+const express = require("express");
+const bodyParser = require("body-parser");
+const crypto = require("crypto");
+const app = express();
+const PORT = process.env.PORT || 3000;
+app.use(bodyParser.json()); 
+// Binance Merchant API callback endpoint
+app.post("/binance-webhook", (req, res) => {
+    const secretKey = "your_binance_api_secret"; 
+    const payload = JSON.stringify(req.body); 
+    const signature = req.headers["binancepay-signature"]; 
+    const timestamp = req.headers["binancepay-timestamp"];
+    // Generate HMAC SHA-512 signature
+    const hash = crypto.createHmac("sha512", secretKey)
+        .update(timestamp + payload)
+        .digest("hex");
 
-### End
+    // Verify signature
+    if (hash !== signature) {
+        return res.status(403).json({ message: "Unauthorized" });
+    }
+    // Process the callback data
+    const { bizType, data, bizStatus } = req.body;
+    if (bizType === "PAY") { 
+        if (bizStatus === "PAY_SUCCESS") {
+            // Do your success operations
+        }
+    }
+    if (bizType === "PAYOUT") {  
+
+    }
+    if (bizType === "PAY_REFUND") {  
+
+    }
+    res.status(200).json({ message: "Success" });
+});
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+```
+
+
+### Summary
+* If there are any issue, please feel free to contribute and contact me nawingngan@gmail.com
 * If you find this package useful, please buy me a coffee. 
 
 ![alt text](https://i.imgur.com/xx04ANu.png)
