@@ -68,6 +68,10 @@ BinanceMerchantPayAPI
         console.log(error)
     })
 ```
+| Param             | Type      | Required      | Description |
+| :---:             | :---:     | :---:         | :---: |
+| merchantTradeNo   | string    | true          |
+| prepayId          | string    | true          |
 
 #### 4. Close Order
 ```node
