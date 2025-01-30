@@ -225,6 +225,44 @@ module.exports = class BinanceMerchantAPI {
             }
         );
     }
+    // FUND TRANSFER 
+    // FUND TRANSFER 
+    // FUND TRANSFER 
+    // FUND TRANSFER 
+    // FUND TRANSFER 
+    /**
+     * transferFund
+     * @param {*} opts 
+     * @param {string} requestId 
+     * @param {string} currency 
+     * @param {number} amount 
+     * @param {'TO_MAIN'|'TO_PAY'} transferType 
+     * @returns 
+     */
+    createTransfer = async (opts) => {
+        return await this.httpRequest('POST', '/binancepay/openapi/wallet/transfer',
+            {
+                'requestId': opts.requestId,
+                'currency': opts.currency,
+                'amount': opts.amount,
+                'transferType': opts.transferType,
+            }
+        );
+    }
+    /**
+     * queryTransfer
+     * @param {*} opts 
+     * @param {string} tranId 
+     * @returns 
+     */
+    queryTransfer = async (opts) => {
+        return await this.httpRequest('POST', '/binancepay/openapi/wallet/transfer/query',
+            {
+                'tranId': opts.tranId,
+            }
+        );
+    }
+
     // PAYOUT
     // PAYOUT
     // PAYOUT
@@ -331,6 +369,11 @@ module.exports = class BinanceMerchantAPI {
             }
         );
     }
+    // Profit Sharing
+    // Profit Sharing
+    // Profit Sharing
+    // Profit Sharing
+    // Profit Sharing
     /**
      * addProfitSharingReceiver
      * @param {*} opts 

@@ -105,12 +105,50 @@ app.post("/binance-webhook", (req, res) => {
     }
     // Process the callback data
     const { bizType, data, bizStatus } = req.body;
-    if (bizStatus === "PAY_SUCCESS") {
-        // Do your success operations
+    if (bizType === "PAY") { 
+        if (bizStatus === "PAY_SUCCESS") {
+            // Do your success operations
+        }
+    }
+    if (bizType === "PAYOUT") {  
+
+    }
+    if (bizType === "PAY_REFUND") {  
+
     }
     res.status(200).json({ message: "Success" });
 });
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+```
+
+### Fund Transfer Operations
+#### 1. Transfer Fund
+```node
+// https://developers.binance.com/docs/binance-pay/api-wallet-transfer
+BinanceMerchantPayAPI
+    .createTransfer({
+        'merchantTradeNo': opts.merchantTradeNo,
+        'prepayId': opts.prepayId,  
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
+```
+
+#### 2. Query Fund
+```node
+// https://developers.binance.com/docs/binance-pay/api-wallet-transfer-query
+BinanceMerchantPayAPI
+    .queryTransfer({
+        'tranId': opts.tranId,
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
 ```
 
 
@@ -151,6 +189,7 @@ BinanceMerchantPayAPI
 
 #### 1. Create Payout
 ```node
+// https://developers.binance.com/docs/binance-pay/api-payout
 BinanceMerchantPayAPI
     .createPayOut({
         'requestId': opts.requestId,
@@ -170,6 +209,7 @@ BinanceMerchantPayAPI
 
 #### 2. Query Payout
 ```node
+// https://developers.binance.com/docs/binance-pay/api-payout-query
 BinanceMerchantPayAPI
     .queryPayOut({
         'requestId': opts.requestId,
@@ -183,6 +223,7 @@ BinanceMerchantPayAPI
 
 #### 3. Validate Payout User
 ```node
+// https://developers.binance.com/docs/binance-pay/api-payout-validate-receiver
 BinanceMerchantPayAPI
     .validatePayOutReceiver({
         'receiveType': opts.receiveType,
@@ -203,6 +244,7 @@ BinanceMerchantPayAPI
 
 #### 1. Query Balance V1
 ```node
+// https://developers.binance.com/docs/binance-pay/api-balance-query
 BinanceMerchantPayAPI
     .queryWalletBalance({
         'wallet': opts.wallet,
@@ -217,6 +259,7 @@ BinanceMerchantPayAPI
 
 #### 2. Query Balance V2
 ```node
+// https://developers.binance.com/docs/binance-pay/api-balance-query-v2
 BinanceMerchantPayAPI
     .queryV2WalletBalance({
         'wallet': opts.wallet,
@@ -231,8 +274,105 @@ BinanceMerchantPayAPI
 
 ### Profit Sharing
 
+#### 1. Add Profit Sharing Receiver 
+```node
+// https://developers.binance.com/docs/binance-pay/api-profitshare-add-receiver
+BinanceMerchantPayAPI
+    .addProfitSharingReceiver({
+        'account': opts.account,
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
+```
+
+#### 2. Add Profit Sharing Receiver 
+```node
+// https://developers.binance.com/docs/binance-pay/api-profitshare-query-receiver
+BinanceMerchantPayAPI
+    .queryProfitSharingReceiver({
+        'pageNum': opts.pageNum,
+        'pageSize': opts.pageSize,
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
+```
+
+#### 3. Delete Profit Sharing Receiver 
+```node
+// https://developers.binance.com/docs/binance-pay/api-profitshare-delete-receiver
+BinanceMerchantPayAPI
+    .deleteProfitSharingReceiver({
+        'account': opts.account,
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
+```
+
+#### 4. Create A Profit Split 
+```node
+// https://developers.binance.com/docs/binance-pay/api-profitshare-submit-split
+BinanceMerchantPayAPI
+    .createSplit({
+        'merchantRequestId': opts.merchantRequestId,
+        'prepayOrderId': opts.prepayOrderId,
+        'receiverList': opts.receiverList,
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
+```
+
+#### 5. Query A Profit Split 
+```node
+// https://developers.binance.com/docs/binance-pay/api-profitshare-query-split
+BinanceMerchantPayAPI
+    .querySplit({
+        'merchantRequestId': opts.merchantRequestId,
+        'prepayOrderId': opts.prepayOrderId,
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
+```
+
+#### 6. Query A Profit Split 
+```node
+// https://developers.binance.com/docs/binance-pay/api-profitshare-split-return
+BinanceMerchantPayAPI
+    .returnSplit({
+        'prepayOrderId': opts.prepayOrderId,
+        'splitOrderNo': opts.splitOrderNo,
+        'originMerchantRequestId': opts.originMerchantRequestId,
+        'merchantReturnNo': opts.merchantReturnNo,
+        'transferOutAccount': opts.transferOutAccount,
+        'returnAmount': opts.returnAmount,
+        'description': opts.description,
+        'webhookUrl': opts.webhookUrl,
+    })
+    .then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    })
+```
+
 
 
 ### End
 * If you find this package useful, please buy me a coffee. 
 
+
+![image description](https://i.imgur.com/xx04ANu.png)
