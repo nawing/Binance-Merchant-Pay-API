@@ -472,36 +472,47 @@ const bodyParser = require("body-parser");
 const crypto = require("crypto");
 const app = express();
 const PORT = process.env.PORT || 3000;
+const BinanceMerchantPayAPI = require("binance-merchant-pay-api");
+const BINANCE_API_KEY = "";
+const BINANCE_SECRET_KEY = "";
+const BINANCE_MERCHANT_ID = "";
+const BinancePay = new BinanceMerchantPayAPI(
+  BINANCE_API_KEY,
+  BINANCE_SECRET_KEY,
+  BINANCE_MERCHANT_ID,
+)
+
 app.use(bodyParser.json()); 
 // Binance Merchant API callback endpoint
+
 app.post("/binance-webhook", (req, res) => {
     const secretKey = "your_binance_api_secret"; 
     const payload = JSON.stringify(req.body); 
     const signature = req.headers["binancepay-signature"]; 
     const timestamp = req.headers["binancepay-timestamp"];
+    const nonce = req.headers["binancepay-nonce"];
     // Generate HMAC SHA-512 signature
-    const hash = crypto.createHmac("sha512", secretKey)
-        .update(timestamp + payload)
-        .digest("hex");
-
-    // Verify signature
-    if (hash !== signature) {
-        return res.status(403).json({ message: "Unauthorized" });
-    }
-    // Process the callback data
-    const { bizType, data, bizStatus } = req.body;
-    if (bizType === "PAY") { 
-        if (bizStatus === "PAY_SUCCESS") {
-            // Do your success operations
+    BinancePay.verifyCallbackSignature((verified) => {
+        if (!verified) {
+            res.status(403).json({ message: "Unauthorized" });
         }
-    }
-    if (bizType === "PAYOUT") {  
+        if (verified) {
+            // Process the callback data
+            const { bizType, data, bizStatus } = req.body;
+            if (bizType === "PAY") { 
+                if (bizStatus === "PAY_SUCCESS") {
+                    // Do your success operations
+                }
+            }
+            if (bizType === "PAYOUT") {  
 
-    }
-    if (bizType === "PAY_REFUND") {  
+            }
+            if (bizType === "PAY_REFUND") {  
 
-    }
-    res.status(200).json({ message: "Success" });
+            }
+            res.status(200).json({ message: "Success" });
+        }
+    })
 });
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 ```

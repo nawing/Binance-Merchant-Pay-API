@@ -13,12 +13,14 @@
   "keywords": [
     "Binance",
     "Merchant",
-    "Pay"
+    "Pay",
+    "Binance Pay",
+    "Binance Api"
   ],
   "author": "Naw Ing",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nawing/Binance-Merchant-Pay-API"
+    "url": "https://github.com/nawing/Binance-Merchant-Pay-API/issues"
   },
   "homepage": "https://github.com/nawing/Binance-Merchant-Pay-API#readme",
   "dependencies": {

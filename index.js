@@ -42,9 +42,9 @@ module.exports = class BinanceMerchantPayAPI {
     httpRequest = async (http_method, path, payload) => {
         const timestamp = Date.now()
         const nonce = this.randomString()
-        const payloadSignature = timestamp + "\n" + nonce + "\n" + JSON.stringify(payload) + "\n"
+        const payloadSign = timestamp + "\n" + nonce + "\n" + JSON.stringify(payload) + "\n";
         const url = baseURL + path
-        const signature = this.hashSignature(payloadSignature)
+        const signature = this.hashSignature(payloadSign)
         return axios.create({
             baseURL,
             headers: {
@@ -481,19 +481,18 @@ module.exports = class BinanceMerchantPayAPI {
     }
     /**
      * verifyCallbackSignature
-     * @param {string} payload
+     * @param {string} recSign
      * @param {string} signature
      * @param {string} timestamp
+     * @param {*} payload
      * @returns
      */
-    verifyCallbackSignature = async (payload, receivedSignature, timestamp) => {
-
-        let generatedSignature = crypto.createHmac("sha512", this.apiSecret)
-            .update(timestamp + payload)
+    verifyCallbackSignature = async (recSign, timestamp, nonce, payload) => {
+        let payloadSign = timestamp + "\n" + nonce + "\n" + JSON.stringify(payload) + "\n";
+        let genSign = crypto.createHmac("sha512", this.apiSecret)
+            .update(payloadSign)
             .digest("hex");
-
-        return generatedSignature === receivedSignature;
-
+        return genSign === recSign;
     }
 }
 
